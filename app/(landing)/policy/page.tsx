@@ -103,7 +103,7 @@ export default function PrivacyPolicyPage() {
       <p className="mb-4">
         We may update our Privacy Policy from time to time. We will notify you
         of any changes by posting the new policy on this page and updating the
-        "Last Updated" date below.
+        &quot;Last Updated&quot; date below.
       </p>
 
       <p className="mb-4">
