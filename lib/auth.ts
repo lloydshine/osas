@@ -20,7 +20,7 @@ export const { handlers, auth } = NextAuth({
   ],
   callbacks: {
     async signIn({ user }) {
-      const existingAccount = await getAccountByEmail(user.email!!);
+      const existingAccount = await getAccountByEmail(user.email as string);
       if (!existingAccount) {
         return false;
       }

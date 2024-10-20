@@ -98,6 +98,7 @@ export function AdmissionForm({ admissionNo }: { admissionNo: string }) {
         description:
           "Error in submitting your submission. Please try again later.",
       });
+      console.log(error);
     } finally {
       setLoading(false);
     }

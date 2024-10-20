@@ -30,7 +30,6 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Settings } from "lucide-react";
 import { MixerHorizontalIcon } from "@radix-ui/react-icons";
 
 interface DataTableProps<TData, TValue> {

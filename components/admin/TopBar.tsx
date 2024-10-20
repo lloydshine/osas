@@ -1,7 +1,6 @@
 import { Button } from "../ui/button";
 import { FileIcon, MessageCircleQuestion } from "lucide-react";
 import Image from "next/image";
-import { Input } from "../ui/input";
 import { auth } from "@/lib/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { SideNav } from "./SideBar";
@@ -32,7 +31,7 @@ export async function Topbar() {
         <div className="flex items-center gap-4">
           <Notifications />
           <Avatar>
-            <AvatarImage src={session?.user.image!!} />
+            <AvatarImage src={session?.user.image || ""} />
             <AvatarFallback>{session?.user.name?.charAt(0)}</AvatarFallback>
           </Avatar>
           <p className="hidden md:block text-sm font-bold">
