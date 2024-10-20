@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  Approved
+  Denied
+  Pending
+}
+
+model Account {
+  id     String @id @default(uuid())
+  email  String @unique
+  role   String
+  office String
+}
+
+model Admission {
+  id           String        @id @default(uuid())
+  firstName    String
+  middleName   String?
+  lastName     String
+  email        String        @unique
+  phoneNumber  String
+  course       String
+  program      String
+  admissionNo  String
+  requirements Requirement[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  status       Status        @default(Pending)
+}
+
+model Requirement {
+  id          Int       @id @default(autoincrement())
+  name        String
+  imageUrl    String?
+  isSubmitted Boolean
+  admissionId String
+  admission   Admission @relation(fields: [admissionId], references: [id], onDelete: Cascade)
+}
