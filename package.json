@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@googleapis/calendar": "^9.7.9",
     "@hookform/resolvers": "^3.9.0",
     "@prisma/client": "^5.21.0",
     "@radix-ui/react-alert-dialog": "^1.1.2",
@@ -25,6 +26,8 @@
     "@tanstack/react-table": "^8.20.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "firebase-admin": "^12.6.0",
+    "googleapis": "^144.0.0",
     "lucide-react": "^0.452.0",
     "next": "14.2.15",
     "next-auth": "^5.0.0-beta.22",

@@ -9,7 +9,7 @@ export default function AdmissionPage() {
   const admissionNo = searchParams.get("no");
   if (admissionNo !== "1" && admissionNo !== "2") return null;
   return (
-    <main className="min-h-screen flex justify-center items-center py-10">
+    <main className="min-h-screen flex justify-center items-center">
       <div className="rounded-lg p-20 w-full md:w-[60%] bg-white drop-shadow-md">
         <h1 className="text-primary text-3xl font-bold mb-10">
           Admission Form

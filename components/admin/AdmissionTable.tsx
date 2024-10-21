@@ -13,10 +13,11 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
 import { StatusBadge } from "../StatusBadge";
-import { Trash2Icon } from "lucide-react";
+import DeleteButton from "./DeleteButton";
+import { deleteAdmission } from "@/actions/admission.action";
+import Link from "next/link";
 
-// Dummy data for status filter (assuming an enum or predefined statuses)
-const statuses = ["Pending", "Approved", "Declined"];
+const statuses = ["Pending", "Approved", "Denied"];
 
 export function AdmissionTable({ data }: { data: any[] }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -105,10 +106,13 @@ export function AdmissionTable({ data }: { data: any[] }) {
                   {new Date(admission.createdAt).toLocaleDateString()}
                 </TableCell>
                 <TableCell className="flex items-center gap-4">
-                  <Button>View</Button>
-                  <Button size="icon" variant="destructive">
-                    <Trash2Icon />
+                  <Button>
+                    <Link href={`admission/${admission.id}`}>View</Link>
                   </Button>
+                  <DeleteButton
+                    id={admission.id}
+                    deleteFunction={deleteAdmission}
+                  />
                 </TableCell>
               </TableRow>
             ))

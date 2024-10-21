@@ -24,10 +24,14 @@ import { useState } from "react";
 import { departments } from "@/lib/globals";
 import { Checkbox } from "../ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
-import { createAdmissionWithRequirements } from "@/actions/admission.action";
+import {
+  createAdmissionWithRequirements,
+  updateAdmissionWithRequirements,
+} from "@/actions/admission.action";
+import { useRouter } from "next/navigation";
 
-// Define validation schema using Zod
 const schema = z.object({
+  id: z.string().optional(),
   admissionNo: z.string().min(1, "Admission Number required"),
   firstName: z.string().min(2, "First name is required"),
   middleName: z.string().optional(),
@@ -51,14 +55,25 @@ const schema = z.object({
 
 export type AdmissionFormData = z.infer<typeof schema>;
 
-export function AdmissionForm({ admissionNo }: { admissionNo: string }) {
-  const [selectedCourse, setSelectedCourse] = useState<string | null>(null);
+interface AdmissionFormProps {
+  defaultValues?: z.infer<typeof schema>;
+  admissionNo: string;
+}
+
+export function AdmissionForm({
+  defaultValues,
+  admissionNo,
+}: AdmissionFormProps) {
+  const [selectedCourse, setSelectedCourse] = useState<string | null>(
+    defaultValues?.course || null
+  );
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
-  const form = useForm<z.infer<typeof schema>>({
+  const form = useForm<AdmissionFormData>({
     resolver: zodResolver(schema),
-    defaultValues: {
+    defaultValues: defaultValues || {
       admissionNo: admissionNo,
       firstName: "",
       middleName: "",
@@ -91,7 +106,18 @@ export function AdmissionForm({ admissionNo }: { admissionNo: string }) {
   const onSubmit = async (values: AdmissionFormData) => {
     try {
       setLoading(true);
-      await createAdmissionWithRequirements(values);
+      if (values.id) {
+        await updateAdmissionWithRequirements(values);
+      } else {
+        const id = await createAdmissionWithRequirements(values);
+        router.push(`/admission/${id}`);
+      }
+      toast({
+        title: "Admission",
+        description: defaultValues
+          ? "Successfully Saved Admission"
+          : "Successfully Submitted Admission",
+      });
     } catch (error) {
       toast({
         title: "Submission Error",
@@ -110,7 +136,8 @@ export function AdmissionForm({ admissionNo }: { admissionNo: string }) {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+        {/* First Name */}
         <FormField
           control={form.control}
           name="firstName"
@@ -124,6 +151,7 @@ export function AdmissionForm({ admissionNo }: { admissionNo: string }) {
             </FormItem>
           )}
         />
+        {/* Middle Name */}
         <FormField
           control={form.control}
           name="middleName"
@@ -137,6 +165,7 @@ export function AdmissionForm({ admissionNo }: { admissionNo: string }) {
             </FormItem>
           )}
         />
+        {/* Last Name */}
         <FormField
           control={form.control}
           name="lastName"
@@ -150,6 +179,7 @@ export function AdmissionForm({ admissionNo }: { admissionNo: string }) {
             </FormItem>
           )}
         />
+        {/* Email */}
         <FormField
           control={form.control}
           name="email"
@@ -163,6 +193,7 @@ export function AdmissionForm({ admissionNo }: { admissionNo: string }) {
             </FormItem>
           )}
         />
+        {/* Phone Number */}
         <FormField
           control={form.control}
           name="phoneNumber"
@@ -176,6 +207,7 @@ export function AdmissionForm({ admissionNo }: { admissionNo: string }) {
             </FormItem>
           )}
         />
+        {/* Course */}
         <FormField
           control={form.control}
           name="course"
@@ -206,6 +238,7 @@ export function AdmissionForm({ admissionNo }: { admissionNo: string }) {
             </FormItem>
           )}
         />
+        {/* Program */}
         <FormField
           control={form.control}
           name="program"
@@ -265,8 +298,8 @@ export function AdmissionForm({ admissionNo }: { admissionNo: string }) {
             </FormItem>
           )}
         />
-        <Button type="submit" disabled={loading}>
-          Submit Admission
+        <Button type="submit" className="mt-20" disabled={loading}>
+          {defaultValues ? "Save Admission" : "Submit Admission"}
         </Button>
       </form>
     </Form>

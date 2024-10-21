@@ -24,10 +24,10 @@ export function StatusBadge({ status }: { status: Status }) {
   }
 
   return (
-    <div
+    <span
       className={`inline-block px-4 py-2 rounded-md border ${bgColor} border-gray-200`}
     >
       <span className={`text-sm font-semibold ${textColor}`}>{status}</span>
-    </div>
+    </span>
   );
 }

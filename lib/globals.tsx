@@ -26,7 +26,7 @@ export const guidanceLinks = [
 export interface Admission {
   id: string;
   firstName: string;
-  middleName?: string;
+  middleName?: string | null;
   lastName: string;
   email: string;
   phoneNumber: string;
@@ -37,6 +37,19 @@ export interface Admission {
   updatedAt: Date;
   status: Status;
   requirements: Requirement[];
+}
+
+export interface Event {
+  id: string; // Unique identifier for the event
+  colorId: string; // Color identifier (corresponding to your color list)
+  summary: string; // Summary or description of the event
+  location: string | null;
+  start: {
+    dateTime: string | null; // Start date and time in ISO 8601 format
+  };
+  end: {
+    dateTime: string | null; // End date and time in ISO 8601 format
+  };
 }
 
 export const departments = [

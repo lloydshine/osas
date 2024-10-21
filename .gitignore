@@ -9,6 +9,8 @@
 # testing
 /coverage
 
+admin.json
+
 # next.js
 /.next/
 /out/

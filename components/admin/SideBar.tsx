@@ -29,7 +29,9 @@ export async function SideBar() {
           <NavLinks links={guidanceLinks} />
         )}
       </div>
-      <LogoutButton />
+      <section className="p-10 mt-auto">
+        <LogoutButton />
+      </section>
     </ScrollArea>
   );
 }

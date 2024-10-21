@@ -18,7 +18,9 @@ export function LogoutButton() {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className="w-full">Sign Out</Button>
+        <Button className="w-full" variant="outline">
+          Sign Out
+        </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
